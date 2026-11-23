@@ -21,15 +21,16 @@ for col in ["Accommodation cost", "Transportation cost"]:
     df[col] = df[col].astype(str).str.replace(r"[^0-9.]", "", regex=True)
     df[col] = pd.to_numeric(df[col])
 
-# Check 4: Convert Flight and Airplane to Plane in the Transportation Type column
+
+# Check 4: Convert the date text into real dates (month/day/year)
+df["Start date"] = pd.to_datetime(df["Start date"], format="%m/%d/%Y")
+df["End date"] = pd.to_datetime(df["End date"], format="%m/%d/%Y")
+
+# Check 5: Convert Flight and Airplane to Plane in the Transportation Type column
 df["Transportation type"] = df["Transportation type"].replace({
     "Airplane": "Plane",
     "Flight": "Plane"
 })
-
-# Convert the date text into real dates (month/day/year)
-df["Start date"] = pd.to_datetime(df["Start date"], format="%m/%d/%Y")
-df["End date"] = pd.to_datetime(df["End date"], format="%m/%d/%Y")
 
 # Add Year and Total cost columns
 df["Year"] = df["Start date"].dt.year
